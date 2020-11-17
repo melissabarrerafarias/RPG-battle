@@ -19,6 +19,26 @@ test('creates a player object', () => {
     );
 });
 
+    test('gets players stats as an object', () => {
+        const player = new Player('Dave');
+
+        expect(player.getStats()).toHaveProperty('potions');
+        expect(player.getStats()).toHaveProperty('health');
+        expect(player.getStats()).toHaveProperty('strength');
+        expect(player.getStats()).toHaveProperty('agility');
+    });
+
+
+    test('gets inventory from player or returns false', () => {
+        const player = new Player('Dave');
+
+        expect(player.getInventory()).toEqual(expect.any(Array));
+
+        player.inventory = [];
+
+        expect(player.getInventory()).toEqual(false);
+    });
+
 
 // A good test runs in isolation. Mocks allow us to fake assumed data, which allows the test at hand to focus only on the logic it cares about. 
 
@@ -26,3 +46,14 @@ test('creates a player object', () => {
 // jest.mock('../lib/Potion');
 // the require() line imports the Potion() constructor into the test, establishing Potion as a usable variable (otherwise new Potion() would throw and error). Then jest.mock() mocks/replaces
 // the constructor's implementation with our faked data. 
+
+
+// test('gets players stats as an object', () => {
+//     const player = new Player('Dave');
+
+//     expect(player.getStats()).toHaveProperty('potions');
+//     expect(player.getStats()).toHaveProperty('health');
+//     expect(player.getStats()).toHaveProperty('strength');
+//     expect(player.getStats()).toHaveProperty('agility');
+// });
+// here we are checking that player.getStats() returns an object with four specific properties. 
