@@ -39,6 +39,34 @@ test('creates a player object', () => {
         expect(player.getInventory()).toEqual(false);
     });
 
+    test('gets players health value', () => {
+        const player = new Player('Dave');
+        expect(player.getHealth()).toEqual(expect.stringContaining(player.health.toString()));
+    });
+
+    test('checks if player is alive or not', () => {
+        const player = new Player('Dave');
+
+        expect(player.isAlive()).toBeTruthy();
+
+        player.health = 0;
+
+        expect(player.isAlive()).toBeFalsy();
+    });
+
+    test('subracts from players health', () => {
+        const player = new Player('Dave');
+        const oldHealth = player.health;
+
+        player.reduceHealth(5);
+        
+        expect(player.health).toBe(oldHealth - 5);
+
+        player.reduceHealth(99999);
+
+        expect(player.health).toBe(0);
+    });
+
 
 // A good test runs in isolation. Mocks allow us to fake assumed data, which allows the test at hand to focus only on the logic it cares about. 
 
@@ -57,3 +85,13 @@ test('creates a player object', () => {
 //     expect(player.getStats()).toHaveProperty('agility');
 // });
 // here we are checking that player.getStats() returns an object with four specific properties. 
+
+
+
+// the expect.stringContaining() method is an expect method that we can use to make sure our string includes our player's health. This is preffered in thiscase because we might need 
+// flexibility to chnage how the player's health will be displayed. 
+
+
+// Notice how we create a new Player instance in every test. We could choose to use the same one in all of our tests, but this might lead to unintneded consequences. Now that out tests affect
+// the Player objects property values, if we used the same object every time, we would no londer be testing properties and methods in isolation. So, it's important to create a new instance
+// of the object we're testing in every test to give that test a fresh start. 
